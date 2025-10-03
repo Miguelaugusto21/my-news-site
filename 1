@@ -1,0 +1,521 @@
+I'll create a news website with daily publications, archive section, and ad spaces. Since this requires a full-stack solution with database integration and CMS functionality that can't be implemented in a single HTML file, I'll provide a frontend mockup that demonstrates the layout and structure.
+
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notícias Diárias - Seu Portal de Informação</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-color: #1a1a1a;
+            --secondary-color: #e74c3c;
+            --accent-color: #3498db;
+            --light-gray: #f8f9fa;
+            --dark-gray: #6c757d;
+            --white: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: var(--primary-color);
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: var(--white);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--secondary-color);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--accent-color);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--secondary-color);
+            color: var(--primary-color);
+        }
+
+        .news-card {
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .news-image {
+            height: 200px;
+            background: linear-gradient(45deg, #3498db, #e74c3c);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .news-content {
+            padding: 1.5rem;
+        }
+
+        .news-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            color: var(--dark-gray);
+            font-size: 0.9rem;
+        }
+
+        .news-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+            color: var(--primary-color);
+        }
+
+        .news-excerpt {
+            color: var(--dark-gray);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .read-more {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .ad-container {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .ad-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+
+        .ad-placeholder {
+            background: linear-gradient(45deg, #34495e, #2c3e50);
+            color: var(--white);
+            padding: 2rem;
+            border-radius: 8px;
+            font-weight: bold;
+            width: 100%;
+        }
+
+        .archive-section {
+            background: var(--white);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .archive-list {
+            list-style: none;
+        }
+
+        .archive-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .archive-list li:last-child {
+            border-bottom: none;
+        }
+
+        .archive-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .archive-link:hover {
+            color: var(--accent-color);
+        }
+
+        .archive-date {
+            color: var(--dark-gray);
+            font-size: 0.9rem;
+            margin-right: 0.5rem;
+        }
+
+        footer {
+            background: var(--primary-color);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .social-links a {
+            color: var(--white);
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-color);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav ul {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .news-image {
+                height: 150px;
+            }
+            
+            .news-title {
+                font-size: 1.2rem;
+            }
+        }
+
+        .breaking-news {
+            background: linear-gradient(90deg, var(--secondary-color), #c0392b);
+            color: var(--white);
+            padding: 1rem;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+
+        .breaking-news-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .breaking-news-content i {
+            font-size: 1.5rem;
+            animation: spin 3s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-newspaper"></i>
+                <span>Notícias Diárias</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Início</a></li>
+                    <li><a href="#politics">Política</a></li>
+                    <li><a href="#economy">Economia</a></li>
+                    <li><a href="#sports">Esportes</a></li>
+                    <li><a href="#technology">Tecnologia</a></li>
+                    <li><a href="#archive">Arquivo</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <main class="main-content">
+            <div class="breaking-news">
+                <div class="breaking-news-content">
+                    <i class="fas fa-bolt"></i>
+                    <span>ÚLTIMA HORA: Governo anuncia novas medidas econômicas para combater inflação</span>
+                </div>
+            </div>
+
+            <section id="daily-news">
+                <h2 class="section-title">Notícias de Hoje</h2>
+                <div class="news-grid">
+                    <article class="news-card">
+                        <div class="news-image">Imagem da Notícia</div>
+                        <div class="news-content">
+                            <div class="news-meta">
+                                <span>15 de março de 2024</span>
+                                <span>•</span>
+                                <span>Política</span>
+                            </div>
+                            <h3 class="news-title">Presidente assina decreto para reforma tributária</h3>
+                            <p class="news-excerpt">O presidente da República assinou hoje um decreto que inicia o processo de reforma tributária, com o objetivo de simplificar o sistema fiscal brasileiro e reduzir a carga tributária sobre empresas.</p>
+                            <a href="#" class="read-more">Ler mais <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="news-card">
+                        <div class="news-image">Imagem da Notícia</div>
+                        <div class="news-content">
+                            <div class="news-meta">
+                                <span>15 de março de 2024</span>
+                                <span>•</span>
+                                <span>Economia</span>
+                            </div>
+                            <h3 class="news-title">Bolsa de Valores fecha em alta após anúncio do BC</h3>
+                            <p class="news-excerpt">A bolsa de valores brasileira encerrou o pregão em alta de 2,3% após o Banco Central anunciar medidas para controlar a inflação e estabilizar a economia.</p>
+                            <a href="#" class="read-more">Ler mais <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="news-card">
+                        <div class="news-image">Imagem da Notícia</div>
+                        <div class="news-content">
+                            <div class="news-meta">
+                                <span>15 de março de 2024</span>
+                                <span>•</span>
+                                <span>Tecnologia</span>
+                            </div>
+                            <h3 class="news-title">Nova startup brasileira atrai investimento de R$ 50 milhões</h3>
+                            <p class="news-excerpt">Uma startup de inteligência artificial sediada em São Paulo conseguiu atrair um investimento de R$ 50 milhões de fundos internacionais para expandir suas operações na América Latina.</p>
+                            <a href="#" class="read-more">Ler mais <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section id="featured-news">
+                <h2 class="section-title">Em Destaque</h2>
+                <div class="news-card">
+                    <div class="news-image">Imagem da Notícia</div>
+                    <div class="news-content">
+                        <div class="news-meta">
+                            <span>14 de março de 2024</span>
+                            <span>•</span>
+                            <span>Esportes</span>
+                        </div>
+                        <h3 class="news-title">Seleção Brasileira vence amistoso e se prepara para Copa América</h3>
+                        <p class="news-excerpt">A seleção brasileira de futebol venceu por 3 a 1 o amistoso contra a Argentina em Buenos Aires, mostrando bom desempenho na preparação para a Copa América que será realizada no Brasil.</p>
+                        <a href="#" class="read-more">Ler mais <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <aside class="sidebar">
+            <div class="ad-container">
+                <h3 class="ad-title">Google Ads</h3>
+                <div class="ad-placeholder">
+                    ESPAÇO PARA ANÚNCIO DO GOOGLE ADS<br>
+                    300x250px
+                </div>
+            </div>
+
+            <div class="ad-container">
+                <h3 class="ad-title">Anúncios Privados</h3>
+                <div class="ad-placeholder">
+                    ESPAÇO PARA ANÚNCIOS PRIVADOS<br>
+                    300x250px
+                </div>
+            </div>
+
+            <div class="archive-section">
+                <h3 class="section-title">Arquivo de Notícias</h3>
+                <ul class="archive-list">
+                    <li>
+                        <a href="#" class="archive-link">
+                            <span class="archive-date">14/03/2024</span>
+                            <span>Reforma da Previdência avança no Congresso</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="archive-link">
+                            <span class="archive-date">13/03/2024</span>
+                            <span>Clima: temperatura recorde em várias cidades</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="archive-link">
+                            <span class="archive-date">12/03/2024</span>
+                            <span>Nova lei de proteção de dados entra em vigor</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="archive-link">
+                            <span class="archive-date">11/03/2024</span>
+                            <span>Festival de Cinema atrai público recorde</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="archive-link">
+                            <span class="archive-date">10/03/2024</span>
+                            <span>Eleições municipais: candidatos se registram</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="logo">
+                <i class="fas fa-newspaper"></i>
+                <span>Notícias Diárias</span>
+            </div>
+            <p>Seu portal de informação confiável desde 2024</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+            <p>&copy; 2024 Notícias Diárias. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Simulação de funcionalidades básicas
+        document.addEventListener('DOMContentLoaded', function() {
+            // Adicionar data atual ao título da página
+            const today = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const formattedDate = today.toLocaleDateString('pt-BR', options);
+            document.querySelector('.section-title').textContent = `Notícias de Hoje - ${formattedDate}`;
+            
+            // Simular carregamento de notícias do arquivo
+            const archiveLinks = document.querySelectorAll('.archive-link');
+            archiveLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    alert('Visualizando notícia do arquivo. Em um sistema real, esta página carregaria o conteúdo completo da notícia.');
+                });
+            });
+            
+            // Simular clique em "Ler mais"
+            const readMoreLinks = document.querySelectorAll('.read-more');
+            readMoreLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    alert('Visualizando notícia completa. Em um sistema real, esta página mostraria o conteúdo completo da notícia.');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+```
